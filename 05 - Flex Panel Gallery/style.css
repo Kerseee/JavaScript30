@@ -1,0 +1,101 @@
+html {
+    box-sizing: border-box;
+    background: #ffc600;
+    font-family: 'helvetica neue';
+    font-size: 20px;
+    font-weight: 200;
+}
+
+body {
+    margin: 0;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+/* before, after 是在該元素的前後加東西，可看：
+   https://developer.mozilla.org/en-US/docs/Web/CSS/::before */
+
+.panels {
+    min-height: 100vh;
+    overflow: hidden;
+    /* overflow 定義了當元素的內容超過元素的範圍時該怎辦，hidden 代表超過的就不顯示 */
+    display: flex;
+}
+
+.panel {
+    background: #6B0F9C;
+    box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+    color: white;
+    text-align: center;
+    align-items: center;
+    /* Safari transitionend event.propertyName === flex */
+    /* Chrome + FF transitionend event.propertyName === flex-grow */
+    transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+    /* 這邊定義了 panel 的 transition 變化方式，在本次練習中是在 panel 被點擊時加上 class，
+       因為加上 class 後 panel 這個 class 的 item 有所變動，因此即使不是以往學的 :hover 等等 
+       裡面包 transform 也會觸發這個 transition*/
+    font-size: 20px;
+    background-size: cover;
+    background-position: center;
+    flex: 1;
+    /* 只有用 flex 是 flex-item 的定義，代表這個元素占 parents 底下格子一格 */
+    display: flex;
+    /* display: flex 就是代表這個元素底下的 element 也要用 flex，因此這邊是 nexted flex */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+.panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+.panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
+.panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+.panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+
+/* Flex Children */
+.panel > * {
+    margin: 0;
+    width: 100%;
+    transition: transform 0.5s;
+    /* border: 1px solid red; */
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel > *:first-child {
+    transform: translateY(-100%);
+}
+.panel.open-active > *:first-child {
+    transform: translateY(0);
+}
+
+.panel > *:last-child {
+    transform: translateY(100%);
+}
+
+.panel.open-active > *:last-child {
+    transform: translateY(0);
+}
+
+.panel p {
+    text-transform: uppercase;
+    font-family: 'Amatic SC', cursive;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+    font-size: 2em;
+}
+
+.panel p:nth-child(2) {
+    font-size: 4em;
+}
+
+.panel.open {
+    font-size: 40px;
+    flex: 5;
+}
+
